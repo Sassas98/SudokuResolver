@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 public class SudokuScene extends Scene{
 
     private int[][] matrix;
+    private TextField[][] fields;
 
     public SudokuScene() {
         this(new BorderPane(), 300d, 400d);
@@ -18,6 +19,7 @@ public class SudokuScene extends Scene{
     private SudokuScene(BorderPane root, double width, double height) {
         super(root, width, height);
         matrix = new int[9][9];
+        fields = new TextField[9][9];
         GridPane grid = new GridPane();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
@@ -33,8 +35,10 @@ public class SudokuScene extends Scene{
                         matrix[x][y] = 0;
                     }
                 });
-                numericField.setMaxSize(20, 20);
+                numericField.setMinSize(40, 40);
+                numericField.setMaxSize(40, 40);
                 grid.add(numericField, i, j);
+                fields[i][j] = numericField;
             }
         }
         Button Btn = new Button("Solve");
@@ -43,6 +47,11 @@ public class SudokuScene extends Scene{
             SudokuResolver sr = new SudokuResolver();
             sr.resolve(sm);
             matrix = sm.getFullMatrix();
+            for(int i = 0; i < 9; i++){
+                for(int j = 0; j < 9; j++){
+                    fields[i][j].setText(matrix[i][j] + "");
+                }
+            }
         });
         Btn.setStyle("-fx-margin-right: 10px;");
         root.setCenter(grid);
