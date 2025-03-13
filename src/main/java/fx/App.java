@@ -10,24 +10,23 @@ import java.util.stream.Stream;
 
 import fx.controllers.SudokuResolver;
 import fx.models.SudokuMatrix;
+import fx.view.SudokuScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class App extends Application {
+
     @Override
     public void start(Stage stage) {
-        sudoku();
-        Label label = new Label("Hello, JavaFX!");
-        Scene scene = new Scene(label, 400, 200);
+        Scene scene = new SudokuScene();
         stage.setScene(scene);
-        stage.setTitle("JavaFX App");
+        stage.setTitle("Sudoku Resolver");
         stage.show();
     }
 
-    public static void sudoku(){
-        Path filePath = Paths.get("file.txt");
+    public static void sudoku(String file){
+        Path filePath = Paths.get(file);
         try (Stream<String> lines = Files.lines(filePath)) {
             List<List<Integer>> nums = lines.map(x -> Arrays.asList(x.split(" ")).stream().map(y -> Integer.parseInt(y)).toList()).toList();
             int dim = (int)Math.sqrt(nums.size());
@@ -50,12 +49,15 @@ public class App extends Application {
                 System.out.println();
                 if(i%dim == dim-1) System.out.println();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { }
     }
 
     public static void run(String[] args) {
+        /* 
+        try {
+            sudoku(args[0]);
+        } catch (Exception e) { System.out.println("Sudoku non compilato"); }
+         */
         launch();
     }
 }

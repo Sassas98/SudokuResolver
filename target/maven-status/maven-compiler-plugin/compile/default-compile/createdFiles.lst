@@ -1,5 +1,6 @@
 fx\controllers\SudokuResolver.class
 fx\App.class
+fx\view\SudokuScene.class
 fx\models\SudokuMatrix.class
 fx\models\SudokuStrutureOptions.class
 fx\SuperMain.class

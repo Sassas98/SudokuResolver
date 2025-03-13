@@ -133,4 +133,15 @@ public class SudokuMatrix {
         return (x/DIM) + (3 * (y/DIM));
     }
 
+    public boolean isSolved(){
+        for (int[] matrix1 : matrix) {
+            for (int num : matrix1) {
+                if (num == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
