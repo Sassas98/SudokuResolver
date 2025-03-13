@@ -1,0 +1,1 @@
+mvn clean package shade:shade&&cd target&&java -jar fx-1.0.jar

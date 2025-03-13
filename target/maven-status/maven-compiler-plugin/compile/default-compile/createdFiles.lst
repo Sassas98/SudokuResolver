@@ -1,0 +1,7 @@
+fx\controllers\SudokuResolver.class
+fx\App.class
+fx\models\SudokuMatrix.class
+fx\models\SudokuStrutureOptions.class
+fx\SuperMain.class
+fx\controllers\SudokuDataGetter.class
+fx\models\SudokuStructure.class
