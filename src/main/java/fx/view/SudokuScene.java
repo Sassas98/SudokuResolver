@@ -12,11 +12,12 @@ public class SudokuScene extends Scene{
 
     private int[][] matrix;
     private TextField[][] fields;
+    private boolean solved = false;
 
-    public SudokuScene() {
-        this(new BorderPane(), 300d, 400d);
+    public SudokuScene(Runnable quit) {
+        this(new BorderPane(), 360d, 400d, quit);
     }
-    private SudokuScene(BorderPane root, double width, double height) {
+    private SudokuScene(BorderPane root, double width, double height, Runnable quit) {
         super(root, width, height);
         matrix = new int[9][9];
         fields = new TextField[9][9];
@@ -35,6 +36,11 @@ public class SudokuScene extends Scene{
                         matrix[x][y] = 0;
                     }
                 });
+                if(new SudokuMatrix(3).getBoxFromPosition(x, y)%2!=0){
+                    numericField.setStyle("-fx-background-color: #dce0d9; -fx-alignment: center;  -fx-border-color: #54426B; -fx-border-width: 2px; -fx-font-size: 20px; -fx-font-family: 'Consolas'; -fx-text-fill: #DE541E;");
+                }else{
+                    numericField.setStyle("-fx-background-color: #808F85; -fx-alignment: center;  -fx-border-color: #623CEA; -fx-border-width: 2px; -fx-font-size: 20px; -fx-font-family: 'Consolas'; -fx-text-fill: #DE541E;");
+                }
                 numericField.setMinSize(40, 40);
                 numericField.setMaxSize(40, 40);
                 grid.add(numericField, i, j);
@@ -42,7 +48,12 @@ public class SudokuScene extends Scene{
             }
         }
         Button Btn = new Button("Solve");
+        Btn.setMinSize(360, 40);
         Btn.setOnAction(event -> {
+            if(solved){
+                quit.run();
+                return;
+            } 
             SudokuMatrix sm = new SudokuMatrix(3, matrix);
             SudokuResolver sr = new SudokuResolver();
             sr.resolve(sm);
@@ -52,8 +63,10 @@ public class SudokuScene extends Scene{
                     fields[i][j].setText(matrix[i][j] + "");
                 }
             }
+            Btn.setText("Refresh");
+            solved = true;
         });
-        Btn.setStyle("-fx-margin-right: 10px;");
+        Btn.setStyle("-fx-background-color: #dce0d9; -fx-font-size: 20px; -fx-font-family: 'Consolas'; -fx-text-fill: #DE541E;");
         root.setCenter(grid);
         root.setBottom(Btn);
 
